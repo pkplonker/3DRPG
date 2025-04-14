@@ -1,26 +1,27 @@
 using UnityEngine;
-#if ENABLE_INPUT_SYSTEM
 using UnityEngine.InputSystem;
-#endif
 
-namespace StarterAssets
+namespace RPG
 {
-	public class StarterAssetsInputs : MonoBehaviour
+	public class InputActions : MonoBehaviour
 	{
 		[Header("Character Input Values")]
-		public Vector2 move;
-		public Vector2 look;
-		public bool jump;
-		public bool sprint;
+		public Vector2 Move;
+
+		public Vector2 Look;
+
+		public bool Jump;
+
+		public bool Sprint;
 
 		[Header("Movement Settings")]
-		public bool analogMovement;
+		public bool AnalogMovement;
 
 		[Header("Mouse Cursor Settings")]
-		public bool cursorLocked = true;
-		public bool cursorInputForLook = true;
+		public bool CursorLocked = true;
 
-#if ENABLE_INPUT_SYSTEM
+		public bool CursorInputForLook = true;
+
 		public void OnMove(InputValue value)
 		{
 			MoveInput(value.Get<Vector2>());
@@ -28,7 +29,7 @@ namespace StarterAssets
 
 		public void OnLook(InputValue value)
 		{
-			if(cursorInputForLook)
+			if (CursorInputForLook)
 			{
 				LookInput(value.Get<Vector2>());
 			}
@@ -43,32 +44,30 @@ namespace StarterAssets
 		{
 			SprintInput(value.isPressed);
 		}
-#endif
-
 
 		public void MoveInput(Vector2 newMoveDirection)
 		{
-			move = newMoveDirection;
-		} 
+			Move = newMoveDirection;
+		}
 
 		public void LookInput(Vector2 newLookDirection)
 		{
-			look = newLookDirection;
+			Look = newLookDirection;
 		}
 
 		public void JumpInput(bool newJumpState)
 		{
-			jump = newJumpState;
+			Jump = newJumpState;
 		}
 
 		public void SprintInput(bool newSprintState)
 		{
-			sprint = newSprintState;
+			Sprint = newSprintState;
 		}
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
+			SetCursorState(CursorLocked);
 		}
 
 		private void SetCursorState(bool newState)
@@ -76,5 +75,4 @@ namespace StarterAssets
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
-	
 }

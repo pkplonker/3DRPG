@@ -1,12 +1,13 @@
+using RPG;
 using UnityEngine;
 
-namespace StarterAssets
+namespace Rpg
 {
     public class UICanvasControllerInput : MonoBehaviour
     {
 
         [Header("Output")]
-        public StarterAssetsInputs starterAssetsInputs;
+        public InputActions starterAssetsInputs;
 
         public void VirtualMoveInput(Vector2 virtualMoveDirection)
         {
