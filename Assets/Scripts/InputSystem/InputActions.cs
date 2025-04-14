@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -13,6 +14,7 @@ namespace RPG
 		public bool Jump;
 
 		public bool Sprint;
+		public bool Interact;
 
 		[Header("Movement Settings")]
 		public bool AnalogMovement;
@@ -21,58 +23,40 @@ namespace RPG
 		public bool CursorLocked = true;
 
 		public bool CursorInputForLook = true;
+		public Action OnInteractAction { get; set; }
 
 		public void OnMove(InputValue value)
 		{
-			MoveInput(value.Get<Vector2>());
+			Move = value.Get<Vector2>();
 		}
 
 		public void OnLook(InputValue value)
 		{
 			if (CursorInputForLook)
 			{
-				LookInput(value.Get<Vector2>());
+				Look = value.Get<Vector2>();
 			}
 		}
 
 		public void OnJump(InputValue value)
 		{
-			JumpInput(value.isPressed);
+			Jump = value.isPressed;
 		}
 
 		public void OnSprint(InputValue value)
 		{
-			SprintInput(value.isPressed);
+			Sprint = value.isPressed;
 		}
 
-		public void MoveInput(Vector2 newMoveDirection)
+		public void OnInteract(InputValue value)
 		{
-			Move = newMoveDirection;
-		}
-
-		public void LookInput(Vector2 newLookDirection)
-		{
-			Look = newLookDirection;
-		}
-
-		public void JumpInput(bool newJumpState)
-		{
-			Jump = newJumpState;
-		}
-
-		public void SprintInput(bool newSprintState)
-		{
-			Sprint = newSprintState;
+			Interact = value.isPressed;
+			OnInteractAction?.Invoke();
 		}
 
 		private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(CursorLocked);
-		}
-
-		private void SetCursorState(bool newState)
-		{
-			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
+			Cursor.lockState = CursorLocked ? CursorLockMode.Locked : CursorLockMode.None;
 		}
 	}
 }
