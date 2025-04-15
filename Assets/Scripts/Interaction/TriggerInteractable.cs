@@ -66,5 +66,6 @@ namespace RPG
 		}
 
 		public abstract bool Interact(IInteractor interactor);
+		public GameObject GetGO() => gameObject;
 	}
 }
